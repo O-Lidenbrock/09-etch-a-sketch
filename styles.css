@@ -1,0 +1,11 @@
+#container{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.square{
+  aspect-ratio: 1/1;
+  border-style: solid;
+  flex: 1 0 21%;
+}
