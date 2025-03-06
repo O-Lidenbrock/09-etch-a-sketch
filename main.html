@@ -22,8 +22,16 @@
       }
     }
 
+
     buildGrid();
 
+    const squares = document.querySelectorAll(".square");
+    squares.forEach(square => {
+      square.addEventListener("mouseenter", (e) => {
+      e.target.style.opacity = "50%";
+      })
+    })
+    
   </script>
 </body>
 </html>
