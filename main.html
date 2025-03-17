@@ -9,45 +9,58 @@
 <body>
   <div id="controls">
     <button id="eraseBtn" onclick="erase()">Erase</button>
-     How many squares to a side? <input id="numSquares" type="number">
+     How many squares to a side? 
+    <input type="range" id="sideLn" name="sideLn" min="2" max="50">
   </div>
   <div id="container"></div>
   
   <script>
     const container = document.querySelector("#container");
+    const inputedSide = document.querySelector("#sideLn");
+
+
+
 
     const buildGrid = (sideLength) => {
+      container.innerHTML = "";
       for(let i = 0; i < (sideLength*sideLength); i++){ //these will be zero indexed
         const square = document.createElement("div");
         square.classList = "square";
         square.id =`sq${i}`;
         square.style.opacity = .1;
+        const lengthPercent = 100/sideLength;
+        square.style.flexBasis = `${lengthPercent}%`; //for some reason decimals don't work here
+
         container.appendChild(square);
+
+        square.addEventListener("mouseenter", (e) => {
+          let op = e.target.style.opacity;
+          op >= 1 ? op = 1 : op -= (-0.2); //it defaults to a string, so a += is concatenation. Because of js's type approximation, though, -= works and then I just add a negative number.
+          e.target.style.opacity = op;
+        })
       }
+
+
     }
 
     let sideLength = 4;
 
-
     buildGrid(sideLength);
 
     const squares = document.querySelectorAll(".square");
-
-    squares.forEach(square => {
-      square.addEventListener("mouseenter", (e) => {
-        let op = e.target.style.opacity;
-        op >= 1 ? op = 1 : op -= (-0.2); //it defaults to a string, so a += is concatenation. Because of js's type approximation, though, -= works and then I just add a negative number.
-        e.target.style.opacity = op;
-      })
-    })
-
+      
     const erase = () => {
       console.log("erasing");
       squares.forEach(square => {
         square.style.opacity = .1;
       })
     }
-    
+
+    inputedSide.addEventListener("input", (event) => {
+      buildGrid(event.target.value); //I need to learn about this event object. and the target has so many properties - is the target just a HTML node object?
+    });
+
+
   </script>
 </body>
 </html>
