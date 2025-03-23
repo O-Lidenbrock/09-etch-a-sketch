@@ -21,14 +21,14 @@
 
 
 
-    const buildGrid = (sideLength) => {
+    const buildGrid = (numSides) => { //get rid of all the numSides variables they're actually # of sides
       container.innerHTML = "";
-      for(let i = 0; i < (sideLength*sideLength); i++){ //these will be zero indexed
+      for(let i = 0; i < (numSides*numSides); i++){ //these will be zero indexed
         const square = document.createElement("div");
         square.classList = "square";
         square.id =`sq${i}`;
         square.style.opacity = .1;
-        const lengthPercent = 100/sideLength;
+        const lengthPercent = 100/numSides;
         square.style.flexBasis = `${lengthPercent}%`; //for some reason decimals don't work here
 
         container.appendChild(square);
