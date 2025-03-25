@@ -17,8 +17,14 @@
   <script>
     const container = document.querySelector("#container");
     const inputedSide = document.querySelector("#sideLn");
+    let editing = true;
 
-
+    document.addEventListener("keydown", (e) => {
+      console.log(e.code);
+      if(e.code === "Escape"){
+        editing = !editing;
+      }
+    })
 
 
     const buildGrid = (numSides) => { //get rid of all the numSides variables they're actually # of sides
@@ -34,9 +40,11 @@
         container.appendChild(square);
 
         square.addEventListener("mouseenter", (e) => {
+          if(editing){
           let op = e.target.style.opacity;
           op >= 1 ? op = 1 : op -= (-0.2); //it defaults to a string, so a += is concatenation. Because of js's type approximation, though, -= works and then I just add a negative number.
           e.target.style.opacity = op;
+          }
         })
       }
 
@@ -45,13 +53,15 @@
 
     buildGrid(inputedSide.value);
 
-    const squares = document.querySelectorAll(".square");
       
     const erase = () => {
       console.log("erasing");
+
+      const squares = document.querySelectorAll(".square");
       squares.forEach(square => {
         square.style.opacity = .1;
       })
+      editing = true; 
     }
 
     inputedSide.addEventListener("input", (event) => {
